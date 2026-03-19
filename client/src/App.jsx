@@ -181,11 +181,11 @@ function App() {
                 <h2>Shop by Category</h2>
                 <div className="category-grid">
                   {[
-                    { name: 'Electronics', emoji: '💻', color: '#3b82f6' },
-                    { name: 'Sports', emoji: '⚽', color: '#10b981' },
-                    { name: 'Kitchen', emoji: '🍳', color: '#f59e0b' },
-                    { name: 'Beauty', emoji: '✨', color: '#8b5cf6' },
-                    { name: 'Fashion', emoji: '👗', color: '#ec4899' },
+                    { name: 'Electronics', emoji: '💻', color: '#00d4ff' },
+                    { name: 'Sports', emoji: '⚽', color: '#0dfb9e' },
+                    { name: 'Kitchen', emoji: '🍳', color: '#ffb700' },
+                    { name: 'Beauty', emoji: '✨', color: '#ff007f' },
+                    { name: 'Fashion', emoji: '👗', color: '#7928ca' },
                   ].map((cat) => (
                     <button
                       key={cat.name}
