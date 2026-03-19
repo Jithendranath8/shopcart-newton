@@ -1,18 +1,44 @@
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import App from './App';
-import { describe, it, expect, vi } from 'vitest';
 
-describe('App', () => {
-    it('renders ShopSmart title', () => {
-        // Mock fetch
-        global.fetch = vi.fn(() =>
+describe('App component', () => {
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (url.includes('/api/health')) {
+        return Promise.resolve({
+          json: () =>
+            Promise.resolve({ status: 'ok', message: 'Running', timestamp: new Date().toISOString() }),
+        });
+      }
+      if (url.includes('/api/products')) {
+        return Promise.resolve({
+          json: () =>
             Promise.resolve({
-                json: () => Promise.resolve({ status: 'ok', message: 'Test Msg', timestamp: 'now' })
-            })
-        );
+              products: [
+                { id: 1, name: 'Wireless Headphones', price: 79.99, category: 'Electronics', stock: 50 },
+                { id: 2, name: 'Running Shoes', price: 129.99, category: 'Sports', stock: 30 },
+              ],
+              total: 2,
+            }),
+        });
+      }
+      return Promise.reject(new Error('Unknown URL'));
+    }));
+  });
 
-        render(<App />);
-        const linkElement = screen.getByText(/ShopSmart/i);
-        expect(linkElement).toBeInTheDocument();
-    });
+  it('renders the ShopSmart header', () => {
+    render(<App />);
+    expect(screen.getByText(/ShopSmart/i)).toBeInTheDocument();
+  });
+
+  it('renders the cart button', () => {
+    render(<App />);
+    expect(screen.getByRole('button', { name: /cart/i })).toBeInTheDocument();
+  });
+
+  it('shows Featured Products section initially', () => {
+    render(<App />);
+    expect(screen.getByText(/Featured Products/i)).toBeInTheDocument();
+  });
 });
