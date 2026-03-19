@@ -6,8 +6,12 @@ const mockProduct = {
   id: 1,
   name: 'Wireless Headphones',
   price: 79.99,
+  originalPrice: 119.99,
   category: 'Electronics',
   stock: 50,
+  rating: 4.5,
+  badge: 'Hot',
+  description: 'Premium sound with 30hr battery',
 };
 
 describe('ProductCard component', () => {
@@ -24,6 +28,11 @@ describe('ProductCard component', () => {
   it('renders the product category', () => {
     render(<ProductCard product={mockProduct} onAddToCart={() => {}} />);
     expect(screen.getByText('Electronics')).toBeInTheDocument();
+  });
+
+  it('renders the badge', () => {
+    render(<ProductCard product={mockProduct} onAddToCart={() => {}} />);
+    expect(screen.getByText('Hot')).toBeInTheDocument();
   });
 
   it('renders Add to Cart button when stock > 0', () => {

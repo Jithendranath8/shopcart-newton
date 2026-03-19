@@ -18,12 +18,24 @@ app.get('/api/health', (req, res) => {
 
 // Products Route - returns in-memory product list
 const products = [
-  { id: 1, name: 'Wireless Headphones', price: 79.99, category: 'Electronics', stock: 50 },
-  { id: 2, name: 'Running Shoes', price: 129.99, category: 'Sports', stock: 30 },
-  { id: 3, name: 'Coffee Maker', price: 49.99, category: 'Kitchen', stock: 20 },
-  { id: 4, name: 'Yoga Mat', price: 29.99, category: 'Sports', stock: 100 },
-  { id: 5, name: 'Smartphone Stand', price: 19.99, category: 'Electronics', stock: 75 },
+  { id: 1, name: 'Wireless Headphones', price: 79.99, originalPrice: 119.99, category: 'Electronics', stock: 50, rating: 4.5, badge: 'Hot', description: 'Premium sound with 30hr battery & ANC' },
+  { id: 2, name: 'Running Shoes', price: 89.99, originalPrice: 129.99, category: 'Sports', stock: 30, rating: 4.7, badge: 'Sale', description: 'Lightweight & responsive for all terrains' },
+  { id: 3, name: 'Coffee Maker', price: 49.99, originalPrice: null, category: 'Kitchen', stock: 20, rating: 4.3, badge: null, description: '12-cup programmable with brew strength control' },
+  { id: 4, name: 'Yoga Mat', price: 29.99, originalPrice: null, category: 'Sports', stock: 100, rating: 4.6, badge: 'New', description: 'Non-slip 6mm thick eco-friendly mat' },
+  { id: 5, name: 'Smartphone Stand', price: 19.99, originalPrice: null, category: 'Electronics', stock: 75, rating: 4.2, badge: null, description: 'Adjustable aluminium desk stand' },
+  { id: 6, name: 'Mechanical Keyboard', price: 119.99, originalPrice: 159.99, category: 'Electronics', stock: 40, rating: 4.8, badge: 'Hot', description: 'TKL RGB with tactile switches' },
+  { id: 7, name: 'Skincare Set', price: 59.99, originalPrice: null, category: 'Beauty', stock: 60, rating: 4.4, badge: 'New', description: 'Vitamin C serum, moisturiser & SPF 50' },
+  { id: 8, name: 'Resistance Bands', price: 14.99, originalPrice: null, category: 'Sports', stock: 200, rating: 4.5, badge: null, description: 'Set of 5 levels, latex-free' },
+  { id: 9, name: 'Air Fryer', price: 89.99, originalPrice: 129.99, category: 'Kitchen', stock: 15, rating: 4.7, badge: 'Sale', description: '5.5L digital with 8 presets' },
+  { id: 10, name: 'Laptop Backpack', price: 44.99, originalPrice: null, category: 'Fashion', stock: 55, rating: 4.3, badge: null, description: 'Water-resistant with USB charging port' },
+  { id: 11, name: 'Smartwatch', price: 149.99, originalPrice: 199.99, category: 'Electronics', stock: 25, rating: 4.6, badge: 'Sale', description: 'Heart rate, SpO2 & GPS — 7-day battery' },
+  { id: 12, name: 'Perfume', price: 64.99, originalPrice: null, category: 'Beauty', stock: 40, rating: 4.5, badge: null, description: 'Long-lasting floral woody fragrance 100ml' },
+  { id: 13, name: 'Blender', price: 39.99, originalPrice: 69.99, category: 'Kitchen', stock: 30, rating: 4.4, badge: 'Sale', description: '1000W with stainless steel blades' },
+  { id: 14, name: 'Denim Jacket', price: 54.99, originalPrice: null, category: 'Fashion', stock: 45, rating: 4.2, badge: 'New', description: 'Classic stonewash, unisex fit' },
+  { id: 15, name: 'Wireless Charger', price: 24.99, originalPrice: null, category: 'Electronics', stock: 80, rating: 4.4, badge: null, description: '15W fast charge Qi-compatible pad' },
+  { id: 16, name: 'Protein Powder', price: 34.99, originalPrice: 49.99, category: 'Sports', stock: 90, rating: 4.6, badge: 'Sale', description: 'Whey isolate 2kg — 25g protein per serving' },
 ];
+
 
 app.get('/api/products', (req, res) => {
   res.json({ products, total: products.length });
