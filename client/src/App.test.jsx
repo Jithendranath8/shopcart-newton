@@ -29,7 +29,7 @@ describe('App component', () => {
 
   it('renders the ShopSmart header', () => {
     render(<App />);
-    expect(screen.getByText(/ShopSmart/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /ShopSmart/i, level: 1 })).toBeInTheDocument();
   });
 
   it('renders the cart button', () => {
@@ -37,8 +37,8 @@ describe('App component', () => {
     expect(screen.getByRole('button', { name: /cart/i })).toBeInTheDocument();
   });
 
-  it('shows Featured Products section initially', () => {
+  it('shows All Products section initially', () => {
     render(<App />);
-    expect(screen.getByText(/Featured Products/i)).toBeInTheDocument();
+    expect(screen.getByText(/All Products/i)).toBeInTheDocument();
   });
 });
