@@ -27,12 +27,14 @@ npm ci
 npm run build
 echo "==> [deploy] Frontend built."
 
-# 4. Start or restart the backend with PM2 (startOrRestart is idempotent)
+# 4. Start or restart the backend with PM2 (idempotent: restart if exists, start if not)
 echo "==> [deploy] Starting/restarting backend with PM2..."
-cd "$APP_DIR"
-pm2 startOrRestart "$APP_DIR/server/src/index.js" \
-  --name "$APP_NAME" \
-  --update-env
+cd "$APP_DIR/server"
+if pm2 describe "$APP_NAME" > /dev/null 2>&1; then
+  pm2 restart "$APP_NAME" --update-env
+else
+  pm2 start src/index.js --name "$APP_NAME"
+fi
 
 # 5. Save PM2 process list so it survives server reboots (idempotent)
 pm2 save --force
