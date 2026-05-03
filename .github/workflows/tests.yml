@@ -70,7 +70,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./client
-        run: npm run test
+        run: npm run test:ci
 
       - name: Build client
         working-directory: ./client
@@ -82,4 +82,4 @@ jobs:
 
       - name: Run e2e tests
         working-directory: ./client
-        run: npx playwright test
+        run: npm run test:e2e
