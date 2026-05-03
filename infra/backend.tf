@@ -12,6 +12,7 @@ terraform {
     }
   }
 
+/*
   backend "s3" {
     bucket         = "shopsmart-tf-state-480009894503"
     key            = "shopsmart/terraform.tfstate"
@@ -19,4 +20,5 @@ terraform {
     dynamodb_table = "shopsmart-tf-locks"
     encrypt        = true
   }
+*/
 }
