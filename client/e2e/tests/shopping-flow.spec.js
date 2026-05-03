@@ -30,7 +30,7 @@ test.describe('ShopSmart E2E — Full Shopping Flow', () => {
   });
 
   test('homepage shows ShopSmart branding', async ({ page }) => {
-    await expect(page.locator('h1')).toContainText('ShopSmart');
+    await expect(page.getByRole('heading', { name: 'ShopSmart' })).toBeVisible();
   });
 
   test('product listing loads and shows products', async ({ page }) => {
