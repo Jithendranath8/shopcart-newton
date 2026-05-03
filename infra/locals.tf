@@ -8,11 +8,14 @@ locals {
   account_id     = data.aws_caller_identity.current.account_id
   region         = data.aws_region.current.name
   static_bucket  = "${local.name_prefix}-static-${local.unique_suffix}"
-  ecr_repo_name  = "${local.name_prefix}-backend"
-  cluster_name   = "${local.name_prefix}-cluster"
-  service_name   = "${local.name_prefix}-service"
-  task_family    = "${local.name_prefix}-task"
-  alb_name       = "${local.name_prefix}-alb"
-  rds_identifier = "${local.name_prefix}-mysql"
-  log_group      = "/ecs/${local.name_prefix}"
+  ecr_backend    = "${local.name_prefix}-backend-${local.unique_suffix}"
+  ecr_client     = "${local.name_prefix}-client-${local.unique_suffix}"
+  cluster_name   = "${local.name_prefix}-cluster-${local.unique_suffix}"
+  service_prefix = "${local.name_prefix}-svc-${local.unique_suffix}"
+  alb_name       = "${local.name_prefix}-alb-${local.unique_suffix}"
+  rds_identifier = "${local.name_prefix}-mysql-${local.unique_suffix}"
+  log_group      = "/ecs/${local.name_prefix}-${local.unique_suffix}"
+  tg_backend     = "${local.name_prefix}-tg-be-${local.unique_suffix}"
+  tg_client      = "${local.name_prefix}-tg-fe-${local.unique_suffix}"
+  db_subnet_grp  = "${local.name_prefix}-db-sub-${local.unique_suffix}"
 }

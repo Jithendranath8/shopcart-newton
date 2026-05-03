@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "backend" {
-  name                 = "${local.name_prefix}-backend"
+  name                 = local.ecr_backend
   image_tag_mutability = "MUTABLE"
   force_delete         = true
 
@@ -13,7 +13,7 @@ resource "aws_ecr_repository" "backend" {
 }
 
 resource "aws_ecr_repository" "client" {
-  name                 = "${local.name_prefix}-client"
+  name                 = local.ecr_client
   image_tag_mutability = "MUTABLE"
   force_delete         = true
 

@@ -2,7 +2,7 @@
 # This follows the principle of least privilege from Ch 15.
 
 resource "aws_security_group" "alb" {
-  name        = "${local.name_prefix}-alb-sg"
+  name        = "${local.name_prefix}-alb-sg-${local.unique_suffix}"
   description = "ALB security group: HTTP from internet"
   vpc_id      = data.aws_vpc.default.id
 
@@ -24,7 +24,7 @@ resource "aws_security_group" "alb" {
 }
 
 resource "aws_security_group" "ecs" {
-  name        = "${local.name_prefix}-ecs-sg"
+  name        = "${local.name_prefix}-ecs-sg-${local.unique_suffix}"
   description = "ECS tasks: only accept traffic from the ALB on port 5001"
   vpc_id      = data.aws_vpc.default.id
 
@@ -46,7 +46,7 @@ resource "aws_security_group" "ecs" {
 }
 
 resource "aws_security_group" "client_ecs" {
-  name        = "${local.name_prefix}-client-sg"
+  name        = "${local.name_prefix}-client-sg-${local.unique_suffix}"
   description = "Client ECS tasks: only accept traffic from the ALB on port 80"
   vpc_id      = data.aws_vpc.default.id
 
@@ -68,7 +68,7 @@ resource "aws_security_group" "client_ecs" {
 }
 
 resource "aws_security_group" "rds" {
-  name        = "${local.name_prefix}-rds-sg"
+  name        = "${local.name_prefix}-rds-sg-${local.unique_suffix}"
   description = "RDS MySQL: only accept connections from ECS"
   vpc_id      = data.aws_vpc.default.id
 

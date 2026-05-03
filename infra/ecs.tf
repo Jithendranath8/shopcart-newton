@@ -22,7 +22,7 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "backend" {
-  name        = "${local.name_prefix}-tg-be"
+  name        = local.tg_backend
   port        = 5001
   protocol    = "HTTP"
   vpc_id      = data.aws_vpc.default.id
@@ -39,7 +39,7 @@ resource "aws_lb_target_group" "backend" {
 }
 
 resource "aws_lb_target_group" "client" {
-  name        = "${local.name_prefix}-tg-fe"
+  name        = local.tg_client
   port        = 80
   protocol    = "HTTP"
   vpc_id      = data.aws_vpc.default.id
@@ -86,7 +86,7 @@ resource "aws_lb_listener_rule" "api" {
 
 # ----- Backend task + service -----
 resource "aws_ecs_task_definition" "backend" {
-  family                   = "${local.name_prefix}-backend-task"
+  family                   = "${local.name_prefix}-backend-${local.unique_suffix}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -137,7 +137,7 @@ resource "aws_ecs_task_definition" "backend" {
 }
 
 resource "aws_ecs_service" "backend" {
-  name             = "${local.name_prefix}-backend-svc"
+  name             = "${local.service_prefix}-backend"
   cluster          = aws_ecs_cluster.main.id
   task_definition  = aws_ecs_task_definition.backend.arn
   desired_count    = 2
@@ -164,7 +164,7 @@ resource "aws_ecs_service" "backend" {
 
 # ----- Client (nginx) task + service -----
 resource "aws_ecs_task_definition" "client" {
-  family                   = "${local.name_prefix}-client-task"
+  family                   = "${local.name_prefix}-client-${local.unique_suffix}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -205,7 +205,7 @@ resource "aws_ecs_task_definition" "client" {
 }
 
 resource "aws_ecs_service" "client" {
-  name             = "${local.name_prefix}-client-svc"
+  name             = "${local.service_prefix}-client"
   cluster          = aws_ecs_cluster.main.id
   task_definition  = aws_ecs_task_definition.client.arn
   desired_count    = 2

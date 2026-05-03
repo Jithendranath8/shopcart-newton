@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "mysql" {
-  name       = "${local.name_prefix}-db-subnets"
+  name       = local.db_subnet_grp
   subnet_ids = data.aws_subnets.default.ids
 }
 
@@ -33,7 +33,7 @@ resource "aws_db_instance" "mysql" {
 
 # Store the assembled DATABASE_URL in Secrets Manager so ECS tasks can read it.
 resource "aws_secretsmanager_secret" "database_url" {
-  name                    = "${local.name_prefix}/database-url"
+  name                    = "${local.name_prefix}/database-url/${local.unique_suffix}"
   description             = "DATABASE_URL for the ECS backend (mysql://...)"
   recovery_window_in_days = 0
 }
@@ -44,7 +44,7 @@ resource "aws_secretsmanager_secret_version" "database_url" {
 }
 
 resource "aws_secretsmanager_secret" "jwt_secret" {
-  name                    = "${local.name_prefix}/jwt-secret"
+  name                    = "${local.name_prefix}/jwt-secret/${local.unique_suffix}"
   description             = "JWT signing secret for the backend"
   recovery_window_in_days = 0
 }
