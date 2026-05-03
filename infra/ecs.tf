@@ -91,8 +91,8 @@ resource "aws_ecs_task_definition" "backend" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn       = var.lab_role_arn
-  task_role_arn            = var.lab_role_arn
+  execution_role_arn       = "arn:aws:iam::${local.account_id}:role/LabRole"
+  task_role_arn            = "arn:aws:iam::${local.account_id}:role/LabRole"
 
   container_definitions = jsonencode([
     {
@@ -169,8 +169,8 @@ resource "aws_ecs_task_definition" "client" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn       = var.lab_role_arn
-  task_role_arn            = var.lab_role_arn
+  execution_role_arn       = "arn:aws:iam::${local.account_id}:role/LabRole"
+  task_role_arn            = "arn:aws:iam::${local.account_id}:role/LabRole"
 
   container_definitions = jsonencode([
     {

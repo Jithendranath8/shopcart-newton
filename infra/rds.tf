@@ -3,6 +3,12 @@ resource "aws_db_subnet_group" "mysql" {
   subnet_ids = data.aws_subnets.default.ids
 }
 
+resource "random_password" "db_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?" # Removed '/', '@', '"', ' ' which RDS doesn't like for MasterUserPassword
+}
+
 resource "aws_db_instance" "mysql" {
   identifier              = local.rds_identifier
   engine                  = "mysql"
@@ -13,7 +19,7 @@ resource "aws_db_instance" "mysql" {
   storage_encrypted       = true
   db_name                 = var.db_name
   username                = var.db_username
-  password                = var.db_password
+  password                = random_password.db_password.result
   port                    = 3306
   publicly_accessible     = false
   multi_az                = false
@@ -34,7 +40,7 @@ resource "aws_secretsmanager_secret" "database_url" {
 
 resource "aws_secretsmanager_secret_version" "database_url" {
   secret_id     = aws_secretsmanager_secret.database_url.id
-  secret_string = "mysql://${var.db_username}:${var.db_password}@${aws_db_instance.mysql.endpoint}/${var.db_name}"
+  secret_string = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_db_instance.mysql.endpoint}/${var.db_name}"
 }
 
 resource "aws_secretsmanager_secret" "jwt_secret" {
